@@ -1,5 +1,5 @@
 server {
-    listen 443 ssl default_server;
+    listen 443 ssl;
     server_name chat-api.typeacid.ir;
 
     access_log  /var/log/nginx/chat-api.typeacid.ir.access.log;
@@ -16,7 +16,7 @@ server {
 }
 
 server {
-    listen 443 ssl default_server;
+    listen 443 ssl;
     server_name chat.typeacid.ir;
 
     access_log  /var/log/nginx/chat.typeacid.ir.access.log;
@@ -28,6 +28,21 @@ server {
     ssl_certificate         /root/certbot-dns-cloudflare/certs/live/typeacid.ir/fullchain.pem;
     ssl_certificate_key     /root/certbot-dns-cloudflare/certs/live/typeacid.ir/privkey.pem;
 }
+
+server {
+    listen 443 ssl default_server;
+    server_name typeacid.ir www.typeacid.ir;
+
+    access_log  /var/log/nginx/chat.typeacid.ir.access.log;
+    error_log   /var/log/nginx/chat.typeacid.ir.error.log;
+
+    root /root/typeacid.ir/website/
+    index index.html
+    
+    ssl_certificate         /root/certbot-dns-cloudflare/certs/live/typeacid.ir/fullchain.pem;
+    ssl_certificate_key     /root/certbot-dns-cloudflare/certs/live/typeacid.ir/privkey.pem;
+}
+
 
 server {
     listen 80 default_server;
