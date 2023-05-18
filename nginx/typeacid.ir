@@ -23,8 +23,11 @@ server {
     error_log   /var/log/nginx/chat.typeacid.ir.error.log;
 
     root /root/typeacid.ir/chatapp/;
-    index index.html;
-    
+    location / {
+        index index.html;
+        try_files $uri $uri/ index.html /index.html =404;
+    }
+
     ssl_certificate         /root/certbot-dns-cloudflare/certs/live/typeacid.ir/fullchain.pem;
     ssl_certificate_key     /root/certbot-dns-cloudflare/certs/live/typeacid.ir/privkey.pem;
 }
@@ -37,8 +40,11 @@ server {
     error_log   /var/log/nginx/typeacid.ir.error.log;
 
     root /root/typeacid.ir/website/;
-    index index.html;
-    
+    location / {
+        index index.html;
+        try_files $uri $uri/ index.html /index.html =404;
+    }
+
     ssl_certificate         /root/certbot-dns-cloudflare/certs/live/typeacid.ir/fullchain.pem;
     ssl_certificate_key     /root/certbot-dns-cloudflare/certs/live/typeacid.ir/privkey.pem;
 }
