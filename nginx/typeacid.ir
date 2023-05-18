@@ -22,7 +22,7 @@ server {
     access_log  /var/log/nginx/chat.typeacid.ir.access.log;
     error_log   /var/log/nginx/chat.typeacid.ir.error.log;
 
-    root /root/typeacid.ir/chatapp/;
+    root /root/typeacid.ir/chatapp/build;
     location / {
         index index.html;
         try_files $uri $uri/ index.html /index.html =404;
@@ -39,7 +39,7 @@ server {
     access_log  /var/log/nginx/typeacid.ir.access.log;
     error_log   /var/log/nginx/typeacid.ir.error.log;
 
-    root /root/typeacid.ir/website/;
+    root /root/typeacid.ir/website;
     location / {
         index index.html;
         try_files $uri $uri/ index.html /index.html =404;
