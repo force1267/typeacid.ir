@@ -10,6 +10,10 @@ cd typeacid.ir
 git stash
 git pull
 
+
+cd website
+sh ./apply.sh
+cd ..
 cd chatapp
 sh ./apply.sh
 cd ..

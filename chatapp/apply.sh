@@ -2,3 +2,4 @@
 
 yarn
 yarn build
+chown -hR www-data: ./build/
