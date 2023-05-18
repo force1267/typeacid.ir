@@ -21,6 +21,8 @@ pm2 startup
 
 cd ..
 
+sudo rm /etc/nginx/sites-enabled/default
+
 echo init done.
 '''
 
