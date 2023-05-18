@@ -21,5 +21,5 @@ cd ..
 echo init done.
 '''
 
-ssh $1 $script
+ssh $@ $script
 bash ./deploy.sh $1
