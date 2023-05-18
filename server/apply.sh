@@ -1,4 +1,4 @@
 #!/bin/sh
 
-npm install
+yarn
 pm2 restart server
