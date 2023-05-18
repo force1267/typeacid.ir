@@ -2,6 +2,8 @@
 
 echo "\n REMEMBER: sync your .env file to remote:~/typeacid.ir/\n"
 
+git push
+
 script='''
 cd typeacid.ir
 
