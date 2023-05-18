@@ -1,0 +1,36 @@
+server {
+    listen 443 ssl default_server;
+    server_name chat-api.typeacid.ir;
+
+    access_log  /var/log/nginx/chat-api.typeacid.ir.access.log;
+    error_log   /var/log/nginx/chat-api.typeacid.ir.error.log;
+
+    location / {
+        proxy_set_header    X-Forwarded-For $remote_addr;
+        proxy_set_header    Host $http_host;
+        proxy_pass          http://127.0.0.1:8080;
+    }
+
+    ssl_certificate         /root/certbot-dns-cloudflare/certs/live/typeacid.ir/fullchain.pem;
+    ssl_certificate_key     /root/certbot-dns-cloudflare/certs/live/typeacid.ir/privkey.pem;
+}
+
+server {
+    listen 443 ssl default_server;
+    server_name chat.typeacid.ir;
+
+    access_log  /var/log/nginx/chat.typeacid.ir.access.log;
+    error_log   /var/log/nginx/chat.typeacid.ir.error.log;
+
+    root /root/typeacid.ir/chatapp/
+    index index.html
+    
+    ssl_certificate         /root/certbot-dns-cloudflare/certs/live/typeacid.ir/fullchain.pem;
+    ssl_certificate_key     /root/certbot-dns-cloudflare/certs/live/typeacid.ir/privkey.pem;
+}
+
+server {
+    listen 80 default_server;
+    server_name _;
+    return 301 https://$host$request_uri;
+}
