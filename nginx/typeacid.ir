@@ -17,6 +17,21 @@ server {
 
 server {
     listen 443 ssl;
+    server_name openai-api.typeacid.ir;
+
+    access_log  /var/log/nginx/openai-api.typeacid.ir.access.log;
+    error_log   /var/log/nginx/openai-api.typeacid.ir.error.log;
+
+    location / {
+        proxy_pass          https://api.openai.com;
+    }
+
+    ssl_certificate         /root/certbot-dns-cloudflare/certs/live/typeacid.ir/fullchain.pem;
+    ssl_certificate_key     /root/certbot-dns-cloudflare/certs/live/typeacid.ir/privkey.pem;
+}
+
+server {
+    listen 443 ssl;
     server_name chat.typeacid.ir;
 
     access_log  /var/log/nginx/chat.typeacid.ir.access.log;
