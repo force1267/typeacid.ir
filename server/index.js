@@ -28,8 +28,8 @@ app.all('*', (req, res) => {
         'Authorization': `Bearer ${openai_token}`,
     }}).then(response => {
         res.status(response.status).json(response.data)
-    }).catch(({ message, data, code, status }) => {
-        res.json({ message, data, code, status })
+    }).catch(({ message, code, response: { data, status } }) => {
+        res.json({ message, code, status, data })
     })
 })
 
