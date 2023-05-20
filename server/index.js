@@ -19,7 +19,7 @@ const openai_token = process.env.OPENAI_TOKEN || ""
 app.all('*', (req, res) => {
     const {
         method,
-        originalUrl: originalUrl,
+        originalUrl,
         body: data
     } = req
     const url = `https://api.openai.com${originalUrl}`
@@ -27,7 +27,7 @@ app.all('*', (req, res) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${openai_token}`,
     }}).then(response => {
-        res.status(response.statusCode).json(response.data)
+        res.status(response.status).json(response.data)
     }).catch(err => {
         res.json(err)
     })
