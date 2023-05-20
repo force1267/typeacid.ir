@@ -1,3 +1,4 @@
+const axios = require('axios')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -12,8 +13,18 @@ app.use(cookieParser({
     secret: ['cat', 'black-cat', 'keyboard-cat'],
 }))
 
-app.get('/', (req, res) => {
-    res.json('what ?')
+app.all('*', (req, res) => {
+    const {
+        method,
+        originalUrl: originalUrl,
+        body: data
+    } = req
+    const url = `https://api.openai.com${originalUrl}`
+    axios({ method, url, data }).then(response => {
+        res.status(response.statusCode).json(response.data)
+    }).catch(err => {
+        res.json(err)
+    })
 })
 
 const port = process.env.PORT || 8080
