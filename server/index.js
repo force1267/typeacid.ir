@@ -15,7 +15,23 @@ app.use(cookieParser({
 }))
 
 const openai_token = process.env.OPENAI_TOKEN || ""
+const users = (process.env.USER_TOKENS || "").split(',').map(user => user.split('.')).reduce((p, c) => (p[c[0]] = c[1], p), {})
 
+app.use((req, res, next) => {
+    const {
+        headers,
+    } = req
+    const auth = headers.authorization
+    if(!auth) {
+        return res.json({ message: "Authenticate", code: "ACCESS_DENIED", status: 403, data: {} })
+    }
+    const token = auth.split('.')
+    const pass = users[token[0]]
+    if(!pass || pass !== token[1]) {
+        return res.json({ message: "Authenticate", code: "ACCESS_DENIED", status: 403, data: {} })
+    }
+    return next()
+})
 app.all('*', (req, res) => {
     const {
         method,
