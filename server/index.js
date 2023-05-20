@@ -23,10 +23,18 @@ app.all('*', (req, res) => {
         body: data
     } = req
     const url = `https://api.openai.com${originalUrl}`
-    axios({ method, url, data, headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${openai_token}`,
-    }}).then(response => {
+    let request = null
+    if(method.toLocaleLowerCase() === "get") {
+        request = axios.get(url, { headers: {
+            'Authorization': `Bearer ${openai_token}`,
+        }})
+    } else {
+        request = axios({ method, url, data, headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${openai_token}`,
+        }})
+    }
+    request.then(response => {
         res.status(response.status).json(response.data)
     }).catch(({ message, code, response: { data, status } }) => {
         res.json({ message, code, status, data })
