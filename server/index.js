@@ -1,3 +1,4 @@
+require('dotenv').config()
 const axios = require('axios')
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -13,6 +14,8 @@ app.use(cookieParser({
     secret: ['cat', 'black-cat', 'keyboard-cat'],
 }))
 
+const openai_token = process.env.OPENAI_TOKEN || ""
+
 app.all('*', (req, res) => {
     const {
         method,
@@ -20,7 +23,10 @@ app.all('*', (req, res) => {
         body: data
     } = req
     const url = `https://api.openai.com${originalUrl}`
-    axios({ method, url, data }).then(response => {
+    axios({ method, url, data, headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${openai_token}`,
+    }}).then(response => {
         res.status(response.statusCode).json(response.data)
     }).catch(err => {
         res.json(err)
